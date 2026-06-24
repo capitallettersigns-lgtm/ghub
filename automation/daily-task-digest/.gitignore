@@ -1,0 +1,15 @@
+# dependencies & build output
+node_modules/
+dist/
+
+# the persistent, logged-in browser profile (contains your session cookies — never commit)
+.profile/
+
+# generated PDFs, logs, run-state
+out/
+logs/
+state/
+
+# your real, filled-in config (copy of config.example.json)
+config.json
+.env

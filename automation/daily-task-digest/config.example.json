@@ -1,0 +1,34 @@
+{
+  "url": "https://your-app.example.com/schedule",
+  "headless": false,
+  "waitForSelector": "",
+  "navTimeoutMs": 60000,
+  "profileDir": "./.profile",
+  "outputDir": "./out",
+
+  "today": {
+    "dateFormat": "dddd, MMMM D",
+    "locale": "en-US"
+  },
+
+  "capture": {
+    "mode": "container",
+    "dateHeaderSelector": "h2",
+    "sectionContainerSelector": "",
+    "contentColumnSelector": "",
+    "maxHeightPx": 20000
+  },
+
+  "whatsapp": {
+    "vaNumber": "+15551234567",
+    "vaDisplayName": "My VA",
+    "caption": "Good morning! Here are today's tasks 🙌",
+    "sendMethod": "paste",
+    "delaySeconds": 2
+  },
+
+  "schedule": {
+    "hour": 7,
+    "minute": 0
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "daily-task-digest",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Capture today's section of a logged-in schedule page as a PDF and send it to a VA via the native WhatsApp Mac app, on a daily unattended schedule.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "capture": "node dist/capture.js",
+    "find-today": "node dist/find-today-helper.js"
+  },
+  "dependencies": {
+    "pdf-lib": "^1.17.1",
+    "playwright": "^1.49.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "typescript": "^5.7.3"
+  }
+}

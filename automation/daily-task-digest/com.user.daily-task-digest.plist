@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.user.daily-task-digest</string>
+
+  <!-- REPLACE the path below with the absolute path to run.sh on your Mac, e.g.
+       /Users/yourname/code/ghub/automation/daily-task-digest/run.sh -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/REPLACE_ME/ghub/automation/daily-task-digest/run.sh</string>
+  </array>
+
+  <!-- When to run each day. Edit Hour/Minute (24h, local time) to match config.schedule. -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>7</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <key>RunAtLoad</key>
+  <false/>
+
+  <!-- GUI automation needs an Interactive (Aqua-session) job. -->
+  <key>ProcessType</key>
+  <string>Interactive</string>
+
+  <!-- REPLACE these paths too (same folder as run.sh, under logs/). -->
+  <key>StandardOutPath</key>
+  <string>/Users/REPLACE_ME/ghub/automation/daily-task-digest/logs/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/REPLACE_ME/ghub/automation/daily-task-digest/logs/launchd.err.log</string>
+</dict>
+</plist>
