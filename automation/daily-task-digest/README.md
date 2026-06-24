@@ -116,19 +116,18 @@ bash scripts/send-whatsapp.sh "$PWD/out/today-$(date +%F).pdf" "+YOURNUMBER" "te
 
 ### 6. Schedule it
 
-1. Edit `com.user.daily-task-digest.plist`: replace every `/Users/REPLACE_ME/...`
-   path with the real absolute path to this folder, and set `Hour`/`Minute`.
-2. Install it:
-   ```bash
-   cp com.user.daily-task-digest.plist ~/Library/LaunchAgents/
-   launchctl load ~/Library/LaunchAgents/com.user.daily-task-digest.plist
-   ```
-3. Dry-run the scheduled path immediately:
-   ```bash
-   launchctl start com.user.daily-task-digest
-   ```
-   Watch `logs/run-YYYY-MM-DD.log`. After changing the plist later:
-   `launchctl unload ... && launchctl load ...`.
+`digest.sh` generates the launchd job **from your `config.json`** (no hand-editing
+paths or `Hour`/`Minute` in a plist) and manages it:
+
+```bash
+chmod +x digest.sh
+./digest.sh install     # generate + load the daily schedule (uses schedule.hour/minute)
+./digest.sh run         # run the whole routine right now, to confirm the scheduled path
+./digest.sh status      # installed? loaded? sent today? + tail of the last run log
+```
+
+Changed the time in `config.json`? Just run `./digest.sh install` again. See
+[Managing & tweaking it](#managing--tweaking-it).
 
 ---
 
@@ -189,6 +188,33 @@ If it misfires:
 Run it by hand (not via launchd) while tuning so you can watch each step.
 
 ---
+
+## Managing & tweaking it
+
+Everything goes through `./digest.sh`, so you rarely touch the plist or remember
+`launchctl`:
+
+| Command | What it does |
+|---|---|
+| `./digest.sh install` / `uninstall` | add / remove the daily schedule (regenerated from `config.json`) |
+| `./digest.sh disable` / `enable` | pause / resume without removing |
+| `./digest.sh status` | installed? loaded? sent today? + tail of the last run log |
+| `./digest.sh run` | run the full routine now |
+| `./digest.sh capture` | capture today's PDF only and open it — check the selector |
+| `./digest.sh send-test [number]` | send the latest PDF to a number (default your VA) — tune the WhatsApp steps fast |
+| `./digest.sh logs` | tail today's run log |
+
+**How often will you actually tweak it? Rarely:**
+
+- The **capture selector** is set once and only needs revisiting if the web app gets
+  redesigned. Adjust it in `config.json` and check with `./digest.sh capture`.
+- The **WhatsApp steps** only need attention if a WhatsApp update moves the UI — and
+  when that happens you'll get the failure notification + screenshot, then fix it in a
+  tight loop: tweak `whatsapp.delaySeconds` / `whatsapp.sendMethod` in `config.json`
+  (or the AppleScript in `scripts/send-whatsapp.sh`) and re-test with
+  `./digest.sh send-test` until it lands. No rebuild needed for those.
+- Changing **when** it runs is just `schedule.hour`/`minute` in `config.json` →
+  `./digest.sh install` again.
 
 ## Troubleshooting
 
